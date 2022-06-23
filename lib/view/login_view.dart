@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tutorial/assets/strings/strings.dart';
+import 'package:tutorial/view/register_view.dart';
 import 'package:tutorial/viewmodel.dart/firebaseauth_vievmodel.dart';
 import 'package:tutorial/widgets/circular_indicator.dart';
 import 'package:tutorial/widgets/elevatedbutton.dart';
@@ -13,6 +15,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final bool _isObscured = true;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firebaseAuthViewModel = FirebaseAuthViewModel();
@@ -29,35 +32,57 @@ class _LoginViewState extends State<LoginView> {
     String password = _passwordController.text.trim();
 
     showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => const CircularIndicator()
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const CircularIndicator());
 
     try {
       await _firebaseAuthViewModel.signInWithEmailAndPassword(email, password);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid e-mail or password")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text(Strings.invalid)));
     }
     if (!mounted) return;
     Navigator.of(context).pop();
   }
 
   void _register() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterView()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const RegisterView()));
   }
+
+  void _forgotPassword() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.all(25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MyTextField(_emailController),
-            MyTextField(_passwordController),
-            MyElevatedButton("LogIn", _logIn),
-            MyRichText("Register", _register)
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child:
+                  const SizedBox(width: 200, height: 173, child: FlutterLogo()),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: MyTextField(
+                  Strings.emailHint, !_isObscured, _emailController),
+            ),
+            Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                child: MyTextField(
+                    Strings.passHint, _isObscured, _passwordController)),
+            Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                child: MyElevatedButton(Strings.login, _logIn)),
+            Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              child: MyRichText(Strings.forgotPass, _forgotPassword),
+            ),
+            MyRichText(Strings.dontHaveAcc, _register),
           ],
         ),
       ),

@@ -10,9 +10,14 @@ class MyRichText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: _text,
-        recognizer: TapGestureRecognizer()
+        children: [
+          TextSpan(
+            text: _text,
+            style: const TextStyle(fontWeight: FontWeight.bold, decoration: TextDecoration.underline, color: Colors.blue),
+            recognizer: TapGestureRecognizer()
           ..onTap = () => _function()
+          )
+        ]
       ),
     );
   }
