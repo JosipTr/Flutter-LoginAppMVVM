@@ -19,9 +19,9 @@ class _MyStreamBuilderState extends State<MyStreamBuilder> {
       stream: _firebaseAuthViewModel.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return HomeView();
+          return const HomeView();
         } else {
-          return LoginView();
+          return const LoginView();
         }
       }
     );
