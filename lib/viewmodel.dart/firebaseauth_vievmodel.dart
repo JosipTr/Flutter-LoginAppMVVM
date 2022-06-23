@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tutorial/resources/models/firebaseauth_model.dart';
 
 class FirebaseAuthViewModel {
@@ -9,5 +10,9 @@ class FirebaseAuthViewModel {
 
   Future signOut() async {
     await _firebaseAuthModel.signOut();
+  }
+
+  Stream<User?> authStateChanges() {
+    return _firebaseAuthModel.authStateChanges();
   }
 }

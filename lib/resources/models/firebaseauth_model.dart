@@ -10,4 +10,8 @@ class FirebaseAuthModel {
   Future signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  Stream<User?> authStateChanges() {
+    return _firebaseAuth.authStateChanges();
+  }
 }
