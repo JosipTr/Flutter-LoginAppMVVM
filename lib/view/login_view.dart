@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutorial/viewmodel.dart/firebaseauth_vievmodel.dart';
 import 'package:tutorial/widgets/circular_indicator.dart';
 import 'package:tutorial/widgets/elevatedbutton.dart';
+import 'package:tutorial/widgets/richtext.dart';
 import 'package:tutorial/widgets/textfield.dart';
 
 class LoginView extends StatefulWidget {
@@ -42,6 +43,10 @@ class _LoginViewState extends State<LoginView> {
     Navigator.of(context).pop();
   }
 
+  void _register() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterView()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +56,8 @@ class _LoginViewState extends State<LoginView> {
           children: [
             MyTextField(_emailController),
             MyTextField(_passwordController),
-            MyElevatedButton("LogIn", _logIn)
+            MyElevatedButton("LogIn", _logIn),
+            MyRichText("Register", _register)
           ],
         ),
       ),
