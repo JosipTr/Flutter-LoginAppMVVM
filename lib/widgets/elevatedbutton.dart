@@ -8,7 +8,7 @@ class MyElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => _function,
+      onPressed: () => _function(),
       child: Text(_text),
     );
   }
