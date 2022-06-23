@@ -12,4 +12,7 @@ class Strings {
   static const String resetPassword = "Reset password";
   static const String userExist = "User already exist";
   static const String dontHaveAcc = "Don't have an account?";
+  static const String passReseted = "E-mail has been sent to your account";
+  static const String affirmative = "Okay";
+  static const String succRegist = "You've been sucessfully registrated!";
 }

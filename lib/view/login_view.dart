@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/assets/strings/strings.dart';
 import 'package:tutorial/view/register_view.dart';
+import 'package:tutorial/view/reset_pass_view.dart';
 import 'package:tutorial/viewmodel.dart/firebaseauth_vievmodel.dart';
 import 'package:tutorial/widgets/circular_indicator.dart';
 import 'package:tutorial/widgets/elevatedbutton.dart';
@@ -51,7 +52,9 @@ class _LoginViewState extends State<LoginView> {
         context, MaterialPageRoute(builder: (context) => const RegisterView()));
   }
 
-  void _forgotPassword() {}
+  void _forgotPassword() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const ResetPasswordView()));
+  }
 
   @override
   Widget build(BuildContext context) {

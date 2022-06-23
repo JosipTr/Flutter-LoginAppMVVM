@@ -2,7 +2,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorial/assets/strings/strings.dart';
 import 'package:tutorial/viewmodel.dart/firebaseauth_vievmodel.dart';
+import 'package:tutorial/widgets/alertdialog.dart';
+import 'package:tutorial/widgets/circular_indicator.dart';
 import 'package:tutorial/widgets/elevatedbutton.dart';
+import 'package:tutorial/widgets/streambuilder.dart';
 import 'package:tutorial/widgets/textformfield.dart';
 
 class RegisterView extends StatefulWidget {
@@ -49,22 +52,43 @@ class _RegisterViewState extends State<RegisterView> {
   //   if (!mounted) return;
   //   Navigator.pop(context);
   // }
+  void _exit() {
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
 
-    Future _register() async {
+  void _navigate() {
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyStreamBuilder()), (route) => false);
+  }
+
+  void _clearController() {
+    _emailTextController.clear();
+    _passwordTextController.clear();
+    _confirmPassTextController.clear();
+  }
+
+  Future _register() async {
     String email = _emailTextController.text.trim();
     String password = _passwordTextController.text.trim();
 
-
-
     if (_formKey.currentState!.validate()) {
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const CircularIndicator());
+
       try {
-        await _firebaseAuthViewModel.createUserWithEmailAndPassword(
-            email, password);
-        _emailTextController.clear();
-        _passwordTextController.clear();
-        _confirmPassTextController.clear();
+        await _firebaseAuthViewModel.createUserWithEmailAndPassword(email, password);
+        _clearController();
+        _exit();
+        showDialog(context: context, builder: (context) => MyAlertDialog(Strings.succRegist, _navigate));
+
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(Strings.userExist)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text(Strings.userExist)));
+            _exit();
+            _clearController();
       }
     }
   }
@@ -100,7 +124,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
+        body: Form(
       key: _formKey,
       child: Container(
         padding: const EdgeInsets.all(25),
@@ -129,7 +153,6 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
       ),
-    )
-    );
+    ));
   }
 }
