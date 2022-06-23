@@ -19,4 +19,8 @@ class FirebaseAuthViewModel {
   Future createUserWithEmailAndPassword(String email, String password) async {
     await _firebaseAuthModel.createUserWithEmailAndPassword(email, password);
   }
+
+  Future sendPasswordResetEmail(String email) async {
+    await _firebaseAuthModel.sendPasswordResetEmail(email);
+  }
 }

@@ -18,4 +18,8 @@ class FirebaseAuthModel {
   Future createUserWithEmailAndPassword(String email, String password) async {
     await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
   }
+
+    Future sendPasswordResetEmail(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
 }
