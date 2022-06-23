@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tutorial/assets/strings/strings.dart';
+import 'package:tutorial/logic/logic.dart';
 import 'package:tutorial/view/register_view.dart';
 import 'package:tutorial/view/reset_pass_view.dart';
 import 'package:tutorial/viewmodel.dart/firebaseauth_vievmodel.dart';
-import 'package:tutorial/widgets/circular_indicator.dart';
 import 'package:tutorial/widgets/elevatedbutton.dart';
 import 'package:tutorial/widgets/richtext.dart';
 import 'package:tutorial/widgets/textfield.dart';
@@ -32,10 +32,7 @@ class _LoginViewState extends State<LoginView> {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
 
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const CircularIndicator());
+    showCircularDialog(context);
 
     try {
       await _firebaseAuthViewModel.signInWithEmailAndPassword(email, password);

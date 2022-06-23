@@ -1,11 +1,7 @@
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:tutorial/assets/strings/strings.dart';
+import 'package:tutorial/logic/logic.dart';
 import 'package:tutorial/viewmodel.dart/firebaseauth_vievmodel.dart';
-import 'package:tutorial/widgets/alertdialog.dart';
-import 'package:tutorial/widgets/circular_indicator.dart';
 import 'package:tutorial/widgets/elevatedbutton.dart';
 import 'package:tutorial/widgets/streambuilder.dart';
 import 'package:tutorial/widgets/textfield.dart';
@@ -33,23 +29,23 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     Navigator.pop(context);
   }
 
-    void _navigate() {
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MyStreamBuilder()), (route) => false);
+  void _navigate() {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const MyStreamBuilder()),
+        (route) => false);
   }
 
   Future _resetPassword() async {
     final String email = _emailController.text.trim();
 
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const CircularIndicator());
+    showCircularDialog(context);
 
     try {
       await _firebaseAuthViewModel.sendPasswordResetEmail(email);
       _emailController.clear();
       _exit();
-      showDialog(context: context, builder: (context) => MyAlertDialog(Strings.passReseted, _navigate));
+      showAlertDialog(Strings.passReseted, _navigate, context: context);
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text(Strings.invalidEmail)));
